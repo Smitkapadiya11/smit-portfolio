@@ -53,8 +53,11 @@ body{
   font-weight:700;
   letter-spacing:0.2px;
 }
-.name-line{font-size:clamp(1.05rem, 1.2rem + .4vw, 1.4rem); line-height:1}
-.brand-name .name-line{font-family:"Poppins";}
+.name-line{
+  font-size:clamp(1.05rem, 1.2rem + .4vw, 1.4rem);
+  line-height:1;
+  font-family:"Poppins";
+}
 
 /* nav toggle (mobile) */
 .nav-toggle{
@@ -134,13 +137,14 @@ body{
   padding-top:16px;
 }
 
+/* profile image */
 .profile-img{
-  width:100%;
-  max-width:120px;
+  width:120px;
   height:120px;
   object-fit:cover;
-  border-radius:12px;
-  border:3px solid rgba(255,255,255,0.04);
+  border-radius:50%;              /* circle */
+  border:3px solid var(--accent); /* accent border */
+  box-shadow:0 4px 12px rgba(0,0,0,0.4);
 }
 
 /* hero text */
@@ -148,21 +152,35 @@ body{
   margin:0 0 0.35rem 0;
   color:var(--accent);
   font-weight:700;
-  font-size:clamp(2rem, 6.6vw, 4.2rem); /* fluid heading */
+  font-size:clamp(2rem, 6.6vw, 4.2rem);
   line-height:0.95;
   letter-spacing:-0.5px;
   display:flex;
   align-items:center;
   gap:0.6rem;
-  white-space:normal;
 }
-.hero-name{ display:inline-block; color:var(--accent); }
+.hero-name{ color:var(--accent); }
 .wave{ font-size:1.1em; transform-origin:50% 50%; }
 
 .sub{
   margin:0;
   font-size:clamp(0.95rem, 1.35vw, 1.15rem);
   color:var(--muted);
+}
+
+/* about section */
+.about-container {
+  display:flex;
+  align-items:center;
+  gap:20px;
+}
+.profile-pic {
+  width:180px;
+  height:180px;
+  border-radius:50%;
+  object-fit:cover;
+  border:3px solid #fff;
+  box-shadow:0 6px 20px rgba(0,0,0,0.35);
 }
 
 /* sections */
@@ -179,33 +197,10 @@ body{
   .hero-left{ order:2; }
   .hero-right{ order:1; }
   .nav-toggle{display:flex}
-  /* keep brand small so nav doesn't wrap */
   .brand-name{ font-size:1.05rem; }
 }
 @media (min-width:901px){
   .nav-toggle{ display:none; }
   .site-nav{ display:block; position:static; background:transparent; padding:0; box-shadow:none; }
   .site-nav ul{ gap:1.35rem; }
-}
-
-.profile-img {
-  width: 120px;
-  height: 120px;
-  object-fit: cover;
-  border-radius: 50%;          /* makes it a circle */
-  border: 3px solid var(--accent);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-}
-.profile-pic {
-  width: 180px;
-  height: 180px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-right: 20px;
-  border: 3px solid #fff;
-}
-.about-container {
-  display: flex;
-  align-items: center;
-  gap: 20px;
 }
