@@ -7,42 +7,42 @@ document.addEventListener('DOMContentLoaded', () => {
     toggle.setAttribute('aria-label', 'Toggle navigation');
 
     toggle.addEventListener('click', () => {
-      const open = nav.classList.toggle('open'); // toggle mobile nav
+      const open = nav.classList.toggle('open');
       toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-      toggle.classList.toggle('active'); // optional: animate bars
+      toggle.classList.toggle('active');
     });
 
-    // close nav when clicking a link (mobile)
     nav.querySelectorAll('a').forEach(a => {
       a.addEventListener('click', () => {
         if (nav.classList.contains('open')) {
           nav.classList.remove('open');
           toggle.classList.remove('active');
-          toggle.setAttribute('aria-expanded', 'false');
+          toggle.setAttribute('aria-expanded','false');
         }
       });
     });
   }
 
-  // smooth scroll for internal links
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  // smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(anchor=>{
     anchor.addEventListener('click', function(e){
       const id = this.getAttribute('href');
-      if (id.length > 1) {
+      if(id.length>1){
         e.preventDefault();
         const target = document.querySelector(id);
-        if (target) target.scrollIntoView({behavior:'smooth', block:'start'});
+        if(target) target.scrollIntoView({behavior:'smooth', block:'start'});
       }
     });
   });
 
-  // tiny wave animation on the emoji
+  // wave animation
   const wave = document.querySelector('.wave');
-  if (wave) {
+  if(wave){
     let up = true;
-    setInterval(() => {
-      wave.style.transform = `rotate(${up ? 18 : 0}deg)`;
-      up = !up;
-    }, 900);
+    setInterval(()=>{wave.style.transform=`rotate(${up?18:0}deg)`; up=!up;},900);
   }
+
+  // current year in footer
+  const year = document.getElementById('year');
+  if(year) year.textContent = new Date().getFullYear();
 });
