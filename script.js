@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     nav.querySelectorAll('a').forEach(a => {
       a.addEventListener('click', () => {
-        if (nav.classList.contains('open')) {
+        if(nav.classList.contains('open')){
           nav.classList.remove('open');
           toggle.classList.remove('active');
           toggle.setAttribute('aria-expanded','false');
@@ -42,7 +42,12 @@ document.addEventListener('DOMContentLoaded', () => {
     setInterval(()=>{wave.style.transform=`rotate(${up?18:0}deg)`; up=!up;},900);
   }
 
-  // current year in footer
-  const year = document.getElementById('year');
-  if(year) year.textContent = new Date().getFullYear();
+  // fade-in cards
+  const cards = document.querySelectorAll('.card');
+  const observer = new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  },{threshold:0.2});
+  cards.forEach(card=>observer.observe(card));
 });
