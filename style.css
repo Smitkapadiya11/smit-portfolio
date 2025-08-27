@@ -137,3 +137,28 @@ section{
   .hero-text, .hero-image{ flex:1 1 100%; }
   header nav{ display:flex; flex-direction:column; gap:0.5rem; }
 }
+/* mobile nav slide-in */
+header nav {
+  transition: transform 0.35s ease, opacity 0.35s ease;
+  transform: translateY(-10px);
+  opacity: 0;
+}
+header nav.open {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* nav-toggle animation */
+.nav-toggle.active .bar:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+.nav-toggle.active .bar:nth-child(2) {
+  opacity: 0;
+}
+.nav-toggle.active .bar:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+.nav-toggle .bar {
+  transition: all 0.3s ease;
+}
+
