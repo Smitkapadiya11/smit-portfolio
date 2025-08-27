@@ -1,19 +1,21 @@
-// Simple mobile nav toggle + smooth scroll and small wave animation
+// Mobile nav toggle + smooth scroll + wave animation
 document.addEventListener('DOMContentLoaded', () => {
-  const toggle = document.getElementById('nav-toggle');
-  const nav = document.getElementById('site-nav');
+  const toggle = document.querySelector('.nav-toggle'); // matches your HTML button
+  const nav = document.querySelector('header nav');     // matches your HTML nav
 
-  toggle.addEventListener('click', () => {
-    const open = nav.classList.toggle('open');
-    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-  });
-
-  // close nav when clicking a link (mobile)
-  nav.querySelectorAll('a').forEach(a => {
-    a.addEventListener('click', (e) => {
-      if (nav.classList.contains('open')) nav.classList.remove('open');
+  if(toggle && nav){
+    toggle.addEventListener('click', () => {
+      const open = nav.classList.toggle('open'); // toggle mobile nav
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
     });
-  });
+
+    // close nav when clicking a link (mobile)
+    nav.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        if (nav.classList.contains('open')) nav.classList.remove('open');
+      });
+    });
+  }
 
   // smooth scroll for internal links
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
