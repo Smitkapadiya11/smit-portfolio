@@ -1,59 +1,39 @@
-// Smooth scroll
-document.querySelectorAll('header nav a').forEach(anchor => {
-  anchor.addEventListener('click', function (e) {
-    e.preventDefault();
-    document.querySelector(this.getAttribute('href')).scrollIntoView({
-      behavior: 'smooth'
+// Simple mobile nav toggle + smooth scroll and small wave animation
+document.addEventListener('DOMContentLoaded', () => {
+  const toggle = document.getElementById('nav-toggle');
+  const nav = document.getElementById('site-nav');
+
+  toggle.addEventListener('click', () => {
+    const open = nav.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+
+  // close nav when clicking a link (mobile)
+  nav.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', (e) => {
+      if (nav.classList.contains('open')) nav.classList.remove('open');
     });
   });
+
+  // smooth scroll for internal links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e){
+      const id = this.getAttribute('href');
+      if (id.length > 1) {
+        e.preventDefault();
+        const target = document.querySelector(id);
+        if (target) target.scrollIntoView({behavior:'smooth', block:'start'});
+      }
+    });
+  });
+
+  // tiny wave animation on the emoji
+  const wave = document.querySelector('.wave');
+  if (wave) {
+    let up = true;
+    setInterval(() => {
+      wave.style.transform = `rotate(${up ? 18 : 0}deg)`;
+      up = !up;
+    }, 900);
+  }
 });
-
-// Active section highlight
-const sections = document.querySelectorAll("section");
-const navLinks = document.querySelectorAll("header nav a");
-
-window.addEventListener("scroll", () => {
-  let current = "";
-  sections.forEach(section => {
-    const sectionTop = section.offsetTop - 60;
-    if (scrollY >= sectionTop) {
-      current = section.getAttribute("id");
-    }
-  });
-  navLinks.forEach(a => {
-    a.classList.remove("active");
-    if (a.getAttribute("href") === "#" + current) {
-      a.classList.add("active");
-    }
-  });
-});
-
-// Reveal on scroll
-const revealSections = document.querySelectorAll("section");
-const revealOnScroll = () => {
-  const triggerBottom = window.innerHeight * 0.85;
-  revealSections.forEach(sec => {
-    const boxTop = sec.getBoundingClientRect().top;
-    if (boxTop < triggerBottom) {
-      sec.classList.add("visible");
-    }
-  });
-};
-window.addEventListener("scroll", revealOnScroll);
-window.addEventListener("load", revealOnScroll);
-
-// Footer year auto-update
-document.getElementById("year").textContent = new Date().getFullYear();
-// Reveal cards individually
-const cards = document.querySelectorAll(".card");
-const revealCards = () => {
-  const triggerBottom = window.innerHeight * 0.85;
-  cards.forEach(card => {
-    const cardTop = card.getBoundingClientRect().top;
-    if (cardTop < triggerBottom) {
-      card.classList.add("visible");
-    }
-  });
-};
-window.addEventListener("scroll", revealCards);
-window.addEventListener("load", revealCards);
