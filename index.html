@@ -10,35 +10,35 @@
 <body>
   <!-- Navbar -->
   <header>
-    <h2>Smit Kapadiya</h2>
+    <h1>Smit Kapadiya</h1>
     <nav>
-      <a href="#home" class="active">Home</a>
-      <a href="#about">About</a>
-      <a href="#education">Education</a>
-      <a href="#skills">Skills</a>
-      <a href="#projects">Projects</a>
-      <a href="#interests">Interests</a>
-      <a href="#contact">Contact</a>
+      <ul>
+        <li><a href="#hero" class="active">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#interests">Interests</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
     </nav>
   </header>
 
-  <!--hero-->
- <section id="hero" class="hero">
-  <div class="hero-content">
-    <div class="hero-text">
-      <h1>Hello, I'm Smit 👋</h1>
-      <p>Python Developer | Data Science Enthusiast | BCA Graduate (2025)</p>
+  <!-- Hero Section -->
+  <section id="hero" class="hero">
+    <div class="hero-content">
+      <div class="hero-text">
+        <h2>Hello, I'm Smit 👋</h2>
+        <p>Python Developer | Data Science Enthusiast | BCA Graduate (2025)</p>
+      </div>
+      <div class="hero-image">
+        <img src="assets/smit.jpg" alt="Smit Kapadiya">
+      </div>
     </div>
-    <div class="hero-image">
-      <img src="assets/smit.jpg" alt="Smit Kapadiya">
-    </div>
-  </div>
-</section>
-
+  </section>
 
   <!-- About -->
   <section id="about">
-    <div class="about-text">
     <h2>About Me</h2>
     <p>
       As a highly motivated and detail-oriented BCA graduate, I have
@@ -85,47 +85,41 @@
   </section>
 
   <!-- Projects -->
-<section id="projects">
-  <h2>Projects</h2>
-  <div class="projects-grid">
+  <section id="projects">
+    <h2>Projects</h2>
+    <div class="projects-grid">
+      <div class="card">
+        <h3>Online Movie Platform (Indexing System)</h3>
+        <p>
+          Built a web-based platform where users could search and browse movies
+          with features like user login, secure file handling, and database
+          management. Gave me practical experience in full-stack development,
+          database connectivity, and creating user-friendly applications.
+        </p>
+      </div>
 
-    <!-- Project 1 -->
-    <div class="card">
-      <h3>Online Movie Platform (Indexing System)</h3>
-      <p>
-        Built a web-based platform where users could search and browse movies
-        with features like user login, secure file handling, and database
-        management. Gave me practical experience in full-stack development,
-        database connectivity, and creating user-friendly applications.
-      </p>
+      <div class="card">
+        <h3>Automatic Restaurant Ordering System</h3>
+        <p>
+          Designed a Python-based restaurant system that lets customers scan a QR,
+          browse the menu, place orders, and receive automated bills. Improved
+          order speed and reduced manual errors. Strengthened my skills in Python,
+          problem-solving, and database integration.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>AI Text-to-Image Generator</h3>
+        <p>
+          Developed a clean, modern web tool that transforms text prompts into
+          images using AI APIs. Features include prompt customization, safe-output
+          filters, history tracking, and easy image downloads. Designed for fast
+          experimentation and creative use-cases, demonstrating my ability to
+          integrate AI/ML with real-world applications.
+        </p>
+      </div>
     </div>
-
-    <!-- Project 2 -->
-    <div class="card">
-      <h3>Automatic Restaurant Ordering System</h3>
-      <p>
-        Designed a Python-based restaurant system that lets customers scan a QR,
-        browse the menu, place orders, and receive automated bills. Improved
-        order speed and reduced manual errors. Strengthened my skills in Python,
-        problem-solving, and database integration.
-      </p>
-    </div>
-
-    <!-- Project 3 -->
-    <div class="card">
-      <h3>AI Text-to-Image Generator</h3>
-      <p>
-        Developed a clean, modern web tool that transforms text prompts into
-        images using AI APIs. Features include prompt customization, safe-output
-        filters, history tracking, and easy image downloads. Designed for fast
-        experimentation and creative use-cases, demonstrating my ability to
-        integrate AI/ML with real-world applications.
-      </p>
-    </div>
-
-  </div>
-</section>
-
+  </section>
 
   <!-- Interests -->
   <section id="interests">
@@ -143,7 +137,7 @@
   <section id="contact">
     <h2>Contact</h2>
     <p>📍 17, Sanidhya Bungalows, Yogi Chowk, Surat, Gujarat, 395010</p>
-    <p>📞 7575807483</p>
+    <p>📞 +91 7575807483</p>
     <p>✉️ <a href="mailto:smit.kapadiya1412005@gmail.com">smit.kapadiya1412005@gmail.com</a></p>
     <p>🔗 <a href="https://www.linkedin.com/in/smit-kapadiya-282104246" target="_blank">LinkedIn</a></p>
     <p>💻 <a href="https://github.com/Smitkapadiya11" target="_blank">GitHub</a></p>
@@ -154,6 +148,9 @@
     <p>© <span id="year"></span> Smit Kapadiya. All Rights Reserved.</p>
   </footer>
 
-  <script src="script.js"></script>
+  <script>
+    // Dynamically set year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
