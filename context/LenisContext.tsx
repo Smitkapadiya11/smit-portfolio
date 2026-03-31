@@ -1,9 +1,9 @@
 'use client';
 
 import { createContext, useContext } from 'react';
-import type Lenis from '@studio-freight/lenis';
 
-export const LenisContext = createContext<Lenis | null>(null);
+// Lenis has been removed — context kept as null for compatibility
+export const LenisContext = createContext<null>(null);
 
 export function useLenis() {
   return useContext(LenisContext);
