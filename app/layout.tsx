@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import { Space_Grotesk, Inter, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 import ClientLayout from '../components/ClientLayout';
-import CustomCursor from '../components/CustomCursor';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
@@ -39,10 +38,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable} antialiased selection:bg-primary/30 selection:text-white`}>
+    <html lang="en" className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable} antialiased`}>
       <body>
         <ClientLayout>
-          <CustomCursor />
           <Navbar />
           {children}
           <Footer />

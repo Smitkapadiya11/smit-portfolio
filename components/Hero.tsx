@@ -3,75 +3,53 @@ import HeroCTAs from './HeroCTAs';
 
 export default function Hero() {
   return (
-    <section id="hero" className="section-tint-hero relative flex min-h-screen w-full flex-col justify-center overflow-hidden px-6 py-28 text-text md:px-12 lg:px-24">
+    <section
+      id="hero"
+      className="relative flex min-h-screen w-full flex-col justify-center overflow-hidden px-5 py-28 text-text sm:px-8 md:px-12 lg:px-20"
+    >
+      {/* Subtle radial accent */}
       <div
-        className="pointer-events-none absolute top-0 right-0 h-[600px] w-full"
+        className="pointer-events-none absolute top-0 right-0 h-[500px] w-full"
         style={{
           background:
-            'radial-gradient(circle at 90% 10%, rgba(240, 147, 43, 0.12) 0%, transparent 52%)',
+            'radial-gradient(circle at 85% 5%, rgba(240, 147, 43, 0.1) 0%, transparent 50%)',
         }}
       />
 
-      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col items-center pt-24 lg:flex-row lg:items-center lg:pt-0">
-        <div className="flex w-full flex-col items-start gap-6 lg:w-[55%] lg:gap-8">
-          <div className="font-mono text-[11px] uppercase tracking-widest text-primary">
-            [ AI AUTOMATION ENGINEER — SURAT, INDIA ]
+      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col items-center gap-12 pt-20 lg:flex-row lg:gap-16 lg:pt-0">
+        
+        {/* ── Left: Text Content ─────────────────────────────── */}
+        <div className="flex w-full flex-col items-start gap-6 lg:w-[55%]">
+          <div className="font-mono text-[10px] sm:text-[11px] uppercase tracking-widest text-primary">
+            [ AI Automation Engineer — Surat, India ]
           </div>
 
-          <div
-            className="font-heading text-[40px] font-bold leading-[1.05] tracking-tight md:text-[56px] lg:text-[72px]"
-            style={{
-              textShadow:
-                '0 0 80px rgba(240, 147, 43, 0.28), 0 0 120px rgba(0, 245, 255, 0.08)',
-            }}
+          <h1
+            className="font-heading text-[36px] font-bold leading-[1.08] tracking-tight sm:text-[48px] md:text-[56px] lg:text-[64px]"
           >
-            <div className="flex flex-wrap gap-x-4">
-              {'I Build AI Agents'.split(' ').map((word, i) => (
-                <span key={i} className="inline-block text-text">
-                  {word}
-                </span>
-              ))}
-            </div>
-            <div className="flex flex-wrap gap-x-4">
-              {'That Replace'.split(' ').map((word, i) => (
-                <span key={i} className="inline-block text-text">
-                  {word}
-                </span>
-              ))}
-            </div>
-            <div className="flex flex-wrap gap-x-4">
-              {'Manual Work.'.split(' ').map((word, i) => (
-                <span key={i} className="inline-block text-primary hero-glow-text">
-                  {word}
-                </span>
-              ))}
-            </div>
-          </div>
+            <span className="block text-text">I Build AI Agents</span>
+            <span className="block text-text">That Replace</span>
+            <span className="block hero-glow-text text-primary">Manual Work.</span>
+          </h1>
 
-          <p className="font-body max-w-xl text-[17px] leading-relaxed text-muted">
+          <p className="max-w-lg text-base leading-relaxed text-muted sm:text-lg">
             Python · AI/ML · Automation · Data Science — BCA Graduate turning business processes into intelligent systems.
           </p>
 
           <HeroCTAs />
 
-          <div className="flex flex-wrap items-center gap-3 pt-4 font-mono text-[10px] uppercase tracking-widest text-muted md:pt-6 md:text-xs">
+          <div className="flex flex-wrap items-center gap-4 pt-2 font-mono text-[10px] uppercase tracking-widest text-muted sm:text-xs">
             <span>⚡ 7 AI Products Live</span>
-            <span className="hidden text-primary/35 sm:inline">|</span>
+            <span className="text-primary/30">|</span>
             <span>📍 Surat, India</span>
-            <span className="hidden text-primary/35 sm:inline">|</span>
+            <span className="text-primary/30">|</span>
             <span>🎓 CHARUSAT 2025</span>
           </div>
         </div>
 
-        <div className="relative mt-16 flex w-full justify-center pb-16 pt-8 md:pt-0 lg:mt-0 lg:w-[45%] lg:justify-center lg:pb-0 lg:pl-16">
+        {/* ── Right: Video ───────────────────────────────────── */}
+        <div className="flex w-full justify-center lg:w-[45%]">
           <FounderVideo />
-        </div>
-      </div>
-
-      <div className="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2">
-        <span className="font-mono text-[9px] uppercase tracking-widest text-secondary">SCROLL</span>
-        <div className="relative h-12 w-[1px] overflow-hidden bg-primary/25">
-          <div className="animate-pulse-line absolute left-0 top-0 h-[50%] w-full bg-primary" />
         </div>
       </div>
     </section>

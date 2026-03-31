@@ -1,7 +1,5 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
-
 const PROJECTS = [
   {
     title: 'Online Movie Platform',
@@ -41,70 +39,44 @@ const PROJECTS = [
 ];
 
 export default function WhereItStarted() {
-  const sectionRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const root = sectionRef.current;
-    if (!root || typeof IntersectionObserver === 'undefined') return;
-
-    const cards = root.querySelectorAll<HTMLElement>('[data-work-card]');
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((en) => {
-          if (en.isIntersecting) en.target.classList.add('is-visible');
-        });
-      },
-      { rootMargin: '0px 0px -8% 0px', threshold: 0.08 }
-    );
-
-    cards.forEach((c) => io.observe(c));
-    return () => io.disconnect();
-  }, []);
-
   return (
     <>
       <div className="section-divider" />
       <section
-        ref={sectionRef}
         id="work"
-        className="section-tint-a relative overflow-hidden border-y border-primary/10 px-6 py-24 text-text md:px-12 lg:px-24"
+        className="relative overflow-hidden px-5 py-20 text-text sm:px-8 md:px-12 lg:px-20"
       >
         <div
-          className="pointer-events-none absolute left-1/2 top-0 h-[500px] w-full -translate-x-1/2"
-          style={{
-            background:
-              'radial-gradient(ellipse at 50% 0%, rgba(240, 147, 43, 0.07) 0%, transparent 70%)',
-          }}
+          className="pointer-events-none absolute left-1/2 top-0 h-[400px] w-full -translate-x-1/2"
+          style={{ background: 'radial-gradient(ellipse at 50% 0%, rgba(240, 147, 43, 0.06) 0%, transparent 65%)' }}
         />
-        <div className="relative z-10 mx-auto max-w-7xl">
-          <div className="mb-16">
-            <h2 className="mb-2 font-heading text-[40px] font-bold leading-tight text-white md:text-[56px]">
+        <div className="relative z-10 mx-auto max-w-6xl">
+          <div className="mb-12">
+            <h2 className="mb-2 font-heading text-[32px] font-bold leading-tight text-white sm:text-[40px] md:text-[48px]">
               Where It Started
             </h2>
-            <div className="font-mono text-xs uppercase tracking-widest text-primary md:text-sm">
-              {`// Academic roots. Production mindset.`}
+            <div className="font-mono text-[10px] uppercase tracking-widest text-primary sm:text-xs">
+              {'// Academic roots. Production mindset.'}
             </div>
           </div>
 
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {PROJECTS.map((project) => (
               <div
                 key={project.title}
-                data-work-card
-                className="work-tilt reveal-on-scroll bento-card glass-card flex flex-col justify-between p-8"
-                data-cursor="hover"
+                className="bento-card flex flex-col justify-between p-6"
               >
                 <div>
-                  <h4 className="mb-4 font-heading text-2xl font-bold text-white">
+                  <h4 className="mb-3 font-heading text-lg font-bold text-white sm:text-xl">
                     {project.title}
                   </h4>
-                  <p className="mb-10 text-sm leading-relaxed text-muted">{project.body}</p>
+                  <p className="mb-6 text-sm leading-relaxed text-muted">{project.body}</p>
                 </div>
-                <div className="flex flex-wrap gap-x-3 gap-y-2 font-mono text-[9px] font-bold uppercase tracking-widest md:gap-x-4">
+                <div className="flex flex-wrap gap-2">
                   {project.tags.map((t, ti) => (
                     <span
                       key={t}
-                      className={ti % 2 === 0 ? 'text-primary' : 'text-accent'}
+                      className={`font-mono text-[9px] font-bold uppercase tracking-widest ${ti % 2 === 0 ? 'text-primary' : 'text-accent'}`}
                     >
                       {t}
                     </span>

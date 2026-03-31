@@ -1,76 +1,28 @@
 "use client";
 
-import { useEffect, useState, useRef, useCallback } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
-import gsap from 'gsap';
 import { Menu, X, Instagram } from 'lucide-react';
 import { useHashNavigation } from '@/hooks/useHashNavigation';
 import { INSTAGRAM_URL } from '@/lib/social';
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const navCollapsedRef = useRef(false);
-  const navRef = useRef<HTMLElement>(null);
-  const mobileMenuRef = useRef<HTMLDivElement>(null);
+  const [scrolled, setScrolled] = useState(false);
   const goToHash = useHashNavigation();
-  const scrollTickRef = useRef<number | null>(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (scrollTickRef.current !== null) return;
-      scrollTickRef.current = requestAnimationFrame(() => {
-        scrollTickRef.current = null;
-        const scrollY = window.scrollY;
-        if (scrollY > 80 && !navCollapsedRef.current) {
-          navCollapsedRef.current = true;
-          gsap.to(navRef.current, {
-            backgroundColor: 'rgba(10, 10, 15, 0.72)',
-            borderColor: 'rgba(240, 147, 43, 0.45)',
-            backdropFilter: 'blur(20px)',
-            duration: 0.3,
-          });
-        } else if (scrollY <= 80 && navCollapsedRef.current) {
-          navCollapsedRef.current = false;
-          gsap.to(navRef.current, {
-            backgroundColor: 'rgba(26, 26, 46, 0.52)',
-            borderColor: 'rgba(240, 147, 43, 0.28)',
-            backdropFilter: 'blur(24px)',
-            duration: 0.3,
-          });
-        }
-      });
-    };
-
+    const handleScroll = () => setScrolled(window.scrollY > 60);
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      if (scrollTickRef.current !== null) cancelAnimationFrame(scrollTickRef.current);
-    };
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Lock body scroll when mobile menu open
   useEffect(() => {
-    if (isMobileMenuOpen) {
-      gsap.to(mobileMenuRef.current, {
-        opacity: 1,
-        y: 0,
-        pointerEvents: 'auto',
-        duration: 0.4,
-        ease: 'power3.out',
-      });
-    } else {
-      gsap.to(mobileMenuRef.current, {
-        opacity: 0,
-        y: -20,
-        pointerEvents: 'none',
-        duration: 0.3,
-        ease: 'power3.in',
-      });
-    }
+    document.body.style.overflow = isMobileMenuOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
   }, [isMobileMenuOpen]);
-
-  const toggleMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
 
   const handleHashNav = useCallback(
     (e: React.MouseEvent, href: string) => {
@@ -78,9 +30,9 @@ export default function Navbar() {
       e.preventDefault();
       const hash = href.replace('/', '');
       goToHash(hash);
-      if (isMobileMenuOpen) setIsMobileMenuOpen(false);
+      setIsMobileMenuOpen(false);
     },
-    [goToHash, isMobileMenuOpen]
+    [goToHash]
   );
 
   const navLinks = [
@@ -90,18 +42,27 @@ export default function Navbar() {
     { label: 'Contact', href: '/contact' },
   ];
 
+  const linkClass =
+    'font-heading font-bold text-xs uppercase tracking-widest text-muted transition-colors duration-200 hover:text-primary';
+
   return (
     <>
+      {/* ── Desktop / Sticky Nav ──────────────────────────────────── */}
       <header
-        ref={navRef}
-        className="fixed top-6 left-1/2 z-[100] flex w-[90%] items-center justify-between gap-10 rounded-full border border-[rgba(240,147,43,0.28)] bg-[rgba(26,26,46,0.55)] px-6 py-4 shadow-[0_8px_32px_rgba(0,0,0,0.35),0_0_40px_rgba(240,147,43,0.08)] backdrop-blur-[24px] supports-[backdrop-filter]:bg-[rgba(26,26,46,0.42)] md:w-max md:justify-center"
+        className={`fixed top-4 left-2 right-2 sm:left-1/2 sm:right-auto sm:-translate-x-1/2 z-[100] flex w-auto sm:w-max items-center justify-between gap-6 md:gap-10 rounded-full px-5 py-3 md:px-8 md:py-4 transition-all duration-300 ${
+          scrolled
+            ? 'glass-pill shadow-[0_8px_32px_rgba(0,0,0,0.4),0_0_40px_rgba(240,147,43,0.08)] border-[rgba(240,147,43,0.35)]'
+            : 'glass-pill shadow-[0_4px_20px_rgba(0,0,0,0.25)] border-[rgba(240,147,43,0.18)]'
+        }`}
       >
-        <Link href="/" className="flex items-center gap-3">
-          <span className="text-xl font-bold text-text tracking-widest font-heading uppercase">
+        {/* Logo */}
+        <Link href="/" className="flex shrink-0 items-center">
+          <span className="font-heading text-sm font-bold uppercase tracking-widest text-text sm:text-base">
             SMIT KAPADIYA
           </span>
         </Link>
 
+        {/* Desktop Nav Links */}
         <nav className="hidden md:flex items-center gap-8">
           {navLinks.map((link) =>
             link.href.startsWith('/#') ? (
@@ -111,81 +72,77 @@ export default function Navbar() {
                 scroll={false}
                 prefetch={false}
                 onClick={(e) => handleHashNav(e, link.href)}
-                className="text-muted font-heading font-bold tracking-tighter uppercase hover:text-primary hover:scale-105 transition-transform active:scale-95 duration-150"
-                data-cursor="hover"
+                className={linkClass}
               >
                 {link.label}
               </Link>
             ) : (
-              <Link
-                key={link.label}
-                href={link.href}
-                className="text-muted font-heading font-bold tracking-tighter uppercase hover:text-primary hover:scale-105 transition-transform active:scale-95 duration-150"
-                data-cursor="hover"
-              >
+              <Link key={link.label} href={link.href} className={linkClass}>
                 {link.label}
               </Link>
             )
           )}
         </nav>
 
+        {/* Social Dropdown */}
         <div className="relative hidden md:block group">
           <button
             type="button"
-            className="flex items-center gap-1.5 font-heading font-bold text-xs uppercase tracking-wider text-muted outline-none transition-colors hover:text-primary"
+            className="flex items-center gap-1 font-heading font-bold text-xs uppercase tracking-widest text-muted transition-colors hover:text-primary"
             aria-haspopup="menu"
-            data-cursor="hover"
           >
             Social
-            <span className="translate-y-px text-[10px] text-primary/90" aria-hidden>
-              ▾
-            </span>
+            <span className="text-[10px] text-primary/80" aria-hidden>▾</span>
           </button>
           <div
-            className="pointer-events-none invisible absolute right-0 top-full z-[110] min-w-[220px] translate-y-1 pt-2 opacity-0 transition-all duration-200 group-hover:pointer-events-auto group-hover:visible group-hover:translate-y-0 group-hover:opacity-100"
+            className="pointer-events-none invisible absolute right-0 top-full z-[110] min-w-[200px] translate-y-2 pt-2 opacity-0 transition-all duration-200 group-hover:pointer-events-auto group-hover:visible group-hover:translate-y-0 group-hover:opacity-100"
             role="menu"
           >
-            <div className="rounded-xl border border-primary/35 bg-[rgba(26,26,46,0.96)] p-2 shadow-[0_20px_50px_rgba(0,0,0,0.5),0_0_28px_rgba(240,147,43,0.2)] backdrop-blur-xl">
+            <div className="glass-card rounded-xl p-2 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
               <Link
                 href={INSTAGRAM_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 rounded-lg px-3 py-2.5 font-mono text-[11px] uppercase tracking-widest text-text transition-colors hover:bg-primary/10 hover:text-primary"
-                data-cursor="hover"
                 role="menuitem"
               >
-                <Instagram
-                  className="h-5 w-5 shrink-0 text-primary drop-shadow-[0_0_10px_rgba(240,147,43,0.65)]"
-                  strokeWidth={1.75}
-                  aria-hidden
-                />
+                <Instagram className="h-4 w-4 shrink-0 text-primary" strokeWidth={1.75} aria-hidden />
                 Instagram
               </Link>
             </div>
           </div>
         </div>
 
+        {/* CTA */}
         <Link
           href="/contact"
-          className="hidden md:inline-block bg-primary text-black px-6 py-2 rounded-none font-heading font-bold uppercase text-xs tracking-wider hover:brightness-110 transition-colors"
-          data-cursor="hover"
+          className="hidden md:inline-block bg-primary text-black px-5 py-2 rounded-full font-heading font-bold uppercase text-xs tracking-wider transition-all duration-200 hover:brightness-110 hover:shadow-[0_0_20px_rgba(240,147,43,0.4)]"
         >
           Book a Call
         </Link>
 
+        {/* Mobile hamburger */}
         <button
           className="md:hidden text-primary p-1 focus:outline-none"
-          onClick={toggleMenu}
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           aria-label="Toggle menu"
-          data-cursor="hover"
         >
-          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          {isMobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
         </button>
       </header>
 
+      {/* ── Mobile Full-screen Menu ───────────────────────────────── */}
       <div
-        ref={mobileMenuRef}
-        className="fixed inset-0 bg-[#0a0a0f]/92 backdrop-blur-xl z-[90] flex flex-col items-center justify-center opacity-0 pointer-events-none"
+        className={`fixed inset-0 z-[90] flex flex-col items-center justify-center transition-all duration-300 md:hidden ${
+          isMobileMenuOpen
+            ? 'opacity-100 pointer-events-auto'
+            : 'opacity-0 pointer-events-none'
+        }`}
+        style={{
+          backdropFilter: 'blur(24px) saturate(180%)',
+          WebkitBackdropFilter: 'blur(24px) saturate(180%)',
+          background: 'rgba(8, 11, 20, 0.92)',
+        }}
       >
         <nav className="flex flex-col items-center gap-8">
           {navLinks.map((link) =>
@@ -205,7 +162,7 @@ export default function Navbar() {
                 key={link.label}
                 href={link.href}
                 className="text-2xl text-text font-heading font-bold tracking-widest uppercase hover:text-primary transition-colors"
-                onClick={toggleMenu}
+                onClick={() => setIsMobileMenuOpen(false)}
               >
                 {link.label}
               </Link>
@@ -215,16 +172,16 @@ export default function Navbar() {
             href={INSTAGRAM_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-center gap-3 font-heading text-xl font-bold uppercase tracking-widest text-primary drop-shadow-[0_0_12px_rgba(240,147,43,0.55)] transition-colors hover:text-secondary"
-            onClick={toggleMenu}
+            className="flex items-center gap-3 font-heading text-xl font-bold uppercase tracking-widest text-primary transition-colors hover:text-secondary"
+            onClick={() => setIsMobileMenuOpen(false)}
           >
-            <Instagram className="h-7 w-7" strokeWidth={1.75} aria-hidden />
+            <Instagram className="h-6 w-6" strokeWidth={1.75} aria-hidden />
             Instagram
           </Link>
           <Link
             href="/contact"
-            className="mt-4 bg-primary text-black px-10 py-4 rounded-none font-heading font-bold uppercase tracking-wider hover:brightness-110 transition-colors"
-            onClick={toggleMenu}
+            className="mt-4 bg-primary text-black px-10 py-4 rounded-full font-heading font-bold uppercase tracking-wider transition-all hover:brightness-110"
+            onClick={() => setIsMobileMenuOpen(false)}
           >
             Book a Call
           </Link>

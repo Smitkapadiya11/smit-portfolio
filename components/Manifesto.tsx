@@ -1,33 +1,26 @@
 export default function Manifesto() {
+  const lines = [
+    { text: 'Stop hiring humans for ', bold: 'robotic jobs.', color: 'text-primary' },
+    { text: 'Software should ', bold: 'think, not just calculate.', color: 'text-accent' },
+    { text: 'If it happens twice, ', bold: 'automate it once.', color: 'text-secondary' },
+  ];
+
   return (
     <>
       <div className="section-divider" />
-      <section className="section-tint-a relative overflow-hidden px-6 py-24 md:px-12 lg:px-24">
-        <div
-          className="pointer-events-none absolute left-1/2 top-0 h-[500px] w-full -translate-x-1/2"
-          style={{
-            background:
-              'radial-gradient(ellipse at 50% 0%, rgba(240, 147, 43, 0.07) 0%, transparent 70%)',
-          }}
-        />
-        <div className="relative z-10 mx-auto max-w-5xl space-y-6">
-          <div className="border-b border-[rgba(240,147,43,0.18)] pb-6" data-cursor="hover">
-            <h3 className="font-heading text-3xl font-normal leading-tight tracking-tight text-text md:text-5xl lg:text-6xl">
-              Stop hiring humans for <span className="font-bold text-primary">robotic jobs.</span>
-            </h3>
-          </div>
-
-          <div className="border-b border-[rgba(240,147,43,0.18)] pb-6" data-cursor="hover">
-            <h3 className="font-heading text-3xl font-normal leading-tight tracking-tight text-text md:text-5xl lg:text-6xl">
-              Software should <span className="font-bold text-accent">think, not just calculate.</span>
-            </h3>
-          </div>
-
-          <div className="border-b border-[rgba(240,147,43,0.18)] pb-6" data-cursor="hover">
-            <h3 className="font-heading text-3xl font-normal leading-tight tracking-tight text-text md:text-5xl lg:text-6xl">
-              If it happens twice, <span className="font-bold text-secondary">automate it once.</span>
-            </h3>
-          </div>
+      <section className="relative overflow-hidden px-5 py-20 sm:px-8 md:px-12 lg:px-20">
+        <div className="relative z-10 mx-auto max-w-5xl space-y-5">
+          {lines.map((line, i) => (
+            <div
+              key={i}
+              className="glass-card border-b border-[rgba(240,147,43,0.12)] px-6 py-7 sm:px-8 sm:py-8 last:border-b-0 transition-all duration-200 hover:border-[rgba(240,147,43,0.25)]"
+            >
+              <h3 className="font-heading text-2xl font-normal leading-tight tracking-tight text-text sm:text-3xl md:text-4xl lg:text-5xl">
+                {line.text}
+                <span className={`font-bold ${line.color}`}>{line.bold}</span>
+              </h3>
+            </div>
+          ))}
         </div>
       </section>
     </>
