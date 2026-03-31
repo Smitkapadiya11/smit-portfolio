@@ -5,7 +5,7 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative flex min-h-screen w-full flex-col justify-center overflow-hidden px-5 py-28 text-text sm:px-8 md:px-12 lg:px-20"
+      className="relative flex min-h-screen w-full flex-col justify-center overflow-hidden px-5 pb-16 pt-28 text-text sm:px-8 md:px-12 lg:px-20 lg:pt-20"
     >
       {/* Subtle radial accent */}
       <div
